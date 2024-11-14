@@ -1,4 +1,5 @@
 import React from 'react';
+import { AuthForm as LoginForm } from '@/components/forms/auth-form';
 
 const LoginPage = () => {
   return (
@@ -7,19 +8,7 @@ const LoginPage = () => {
         {/* Left column with image */}
       </section>
       <section style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {/* Right column with login form */}
-        <form>
-          <h2>Login</h2>
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" name="username" />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" />
-          </div>
-          <button type="submit">Login</button>
-        </form>
+        <LoginForm />
       </section>
     </div>
   );
