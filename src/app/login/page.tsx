@@ -4,29 +4,25 @@ import Image from "next/image";
 
 const LoginPage = () => {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <main className="flex flex-row h-[100vh]">
       <section
-        className="p-4 h-full"
+        className="p-4 w-50"
       >
         <Image
           src="/images/illustration-authentication.svg"
           alt="hero-image"
           width={'500'}
-          height={'100'}
-          className="h-full w-auto rounded-lg"
+          height={'400'}
+          objectFit="cover"
+          className="h-full rounded-lg w-50"
         />
       </section>
       <section
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        className='flex flex-1 justify-center items-center'
       >
         <LoginForm />
       </section>
-    </div>
+    </main>
   );
 };
 
