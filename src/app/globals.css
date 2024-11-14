@@ -4,4 +4,10 @@
 
 body {
   background-color: #F2F3F7;
+  font-family: 'PublicSans', Courier, monospace;
+}
+
+@font-face {
+  font-family: 'PublicSans';
+  src: url('/fonts/PublicSans-VariableFont_wght.ttf');
 }
