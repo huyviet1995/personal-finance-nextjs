@@ -5,6 +5,7 @@ type ButtonProps = {
     title: string;
     onClick?: () => void;
     className?: string; // Add className prop
+    disabled?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = ({

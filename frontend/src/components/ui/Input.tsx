@@ -6,6 +6,8 @@ type InputProps = {
   className?: string;
   placeholder?: string;
   type?: string;
+  errorMessage?: string;
+  isInvalid?: boolean;
 };
 
 export const Input = ({ label, className, placeholder, type, ...props }: InputProps) => {
@@ -23,6 +25,7 @@ export const Input = ({ label, className, placeholder, type, ...props }: InputPr
         size='lg'
         classNames={{
           input: 'w-full min-h-[45px] bg-white border border-gray-300 rounded-md pl-2',
+          errorMessage: 'text-red-500 text-sm',
         }}
         {...props}
       />
