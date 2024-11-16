@@ -9,6 +9,8 @@ import { z } from "zod";
 type AuthFormProps = {
   title: string;
   buttonLabel: string;
+  onSubmit?: (data: FormData) => any;
+  errors: any;
 };
 
 const authFormSchema = z.object({
@@ -20,7 +22,7 @@ const authFormSchema = z.object({
 
 type AuthFormData = z.infer<typeof authFormSchema>;
 
-export const AuthForm = ({ title, buttonLabel }: AuthFormProps) => {
+export const AuthForm = ({ title, buttonLabel, ...props }: AuthFormProps) => {
   const {
     register,
     handleSubmit,
@@ -31,12 +33,20 @@ export const AuthForm = ({ title, buttonLabel }: AuthFormProps) => {
   });
 
   // Handlers
-  const onSubmit = (data: AuthFormData) => {
+  const onSubmit = (data: {
+    email: string;
+    password: string;
+  }) => {
+    const formData = new FormData();
     console.log(data);
+    formData.append("email", data.email);
+    formData.append('password', data.password);
+
     const validationErrors = authFormSchema.safeParse(data);
     if (validationErrors.success) {
       console.log("Form is valid, submit data");
     }
+    props?.onSubmit?.(formData);
   };
 
   return (
