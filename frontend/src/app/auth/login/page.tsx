@@ -3,7 +3,7 @@ import { AuthForm as LoginForm } from "@/components/forms/auth-form";
 
 const LoginPage = () => {
   return (
-      <LoginForm />
+      <LoginForm title="Login" buttonLabel="Login" />
   );
 };
 
