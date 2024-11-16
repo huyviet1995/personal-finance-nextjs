@@ -13,12 +13,13 @@ export async function signup(formState: SignupResponse, formData: FormData): Pro
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   try {
-    const response = await fetch("/api/signup", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ 
+        username: email,
         email: email, 
         password: password 
        }),
