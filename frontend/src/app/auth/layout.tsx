@@ -1,10 +1,13 @@
 import React from "react";
-import { AuthForm as LoginForm } from "@/components/forms/auth-form";
 import Image from "next/image";
 
-const LoginPage = () => {
+type AuthLayoutProps = {
+  children: React.ReactNode;
+};
+
+const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <main className="flex flex-row h-[100vh]">
+    <main className="flex-grow flex flex-row max-h-[100vh]">
       <section className="relative p-4">
         <Image
           src="/images/illustration-authentication.svg"
@@ -12,7 +15,7 @@ const LoginPage = () => {
           width={'500'}
           height={'400'}
           objectFit="cover"
-          className="h-full w-full rounded-lg w-50"
+          className="h-full w-full rounded-lg w-50 object-cover"
         />
         <div className="absolute p-4 bottom-10 w-full h-full flex flex-col justify-end items-center text-white">
           <h1 className="text-[32px] font-bold">Keep track of your money and save for your future</h1>
@@ -22,10 +25,10 @@ const LoginPage = () => {
         </div>
       </section>
       <section className='flex flex-1 justify-center items-center'>
-        <LoginForm />
+        {children}
       </section>
     </main>
   );
 };
 
-export default LoginPage;
+export default AuthLayout;
