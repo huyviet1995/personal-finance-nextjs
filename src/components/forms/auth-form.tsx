@@ -11,6 +11,7 @@ export const AuthForm = () => {
         <Input 
           label="Email"
           placeholder="Enter your email"
+          type="email"
         />
         <Input 
           label="Password"
