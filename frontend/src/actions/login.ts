@@ -2,12 +2,15 @@
 
 export async function login(email: string, password: string): Promise<boolean> {
   try {
-    const response = await fetch("/api/login", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_APP_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ 
+        identifier: email,
+        password,
+       }),
     });
 
     if (!response.ok) {
@@ -16,8 +19,9 @@ export async function login(email: string, password: string): Promise<boolean> {
 
     const data = await response.json();
     // Assuming the API returns a token on successful login
-    if (data.token) {
-      localStorage.setItem("token", data.token);
+    if (data.jwt) {
+      localStorage.setItem("jwt", data.jwt);
+      localStorage.setItem("user", data.user);
       return true;
     } else {
       return false;

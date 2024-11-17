@@ -3,10 +3,12 @@ import React, { startTransition } from "react";
 import { useActionState } from "react";
 import { AuthForm as SignupForm } from "@/components/forms/auth-form";
 import * as actions from "@/actions";
+import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
+  const router = useRouter();
   const [formState, formActions] = useActionState(actions.signup, {
-    token: "",
+    jwt: "",
     user: {
       id: "",
       email: "",
@@ -17,10 +19,10 @@ const SignupPage = () => {
   }})
 
   const handleSubmit = (data: FormData) => {
-    console.log(data);
     startTransition(() => {
       formActions(data);
     })
+    router.push('/')
   }
 
   return (

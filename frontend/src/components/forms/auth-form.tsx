@@ -45,8 +45,8 @@ export const AuthForm = ({ title, buttonLabel, ...props }: AuthFormProps) => {
     const validationErrors = authFormSchema.safeParse(data);
     if (validationErrors.success) {
       console.log("Form is valid, submit data");
+      props?.onSubmit?.(formData);
     }
-    props?.onSubmit?.(formData);
   };
 
   return (
