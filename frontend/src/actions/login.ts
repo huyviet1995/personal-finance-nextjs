@@ -1,8 +1,8 @@
-"use server";
-
-export async function login(email: string, password: string): Promise<boolean> {
+export async function login(formState: any, formData: FormData): Promise<boolean> {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_APP_URL}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export async function login(email: string, password: string): Promise<boolean> {
     // Assuming the API returns a token on successful login
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
-      localStorage.setItem("user", data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
       return true;
     } else {
       return false;
