@@ -1,3 +1,5 @@
+import { HTTP_METHODS } from "@/utils/constants";
+
 export interface SignupResponse {
   jwt?: string;
   user?: {
@@ -15,10 +17,10 @@ export async function signup(formState: any, formData: FormData): Promise<Signup
   const password = formData.get("password") as string;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local/register`, {
-      method: "POST",
+    const response = await fetch('/api/signup', {
+      method: HTTP_METHODS.POST,
       headers: {
-        "Content-Type": "application/json",
+      "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: email,
