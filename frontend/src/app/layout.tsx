@@ -34,7 +34,9 @@ export default function RootLayout({
       >
         <SessionProvider>
           <Sidebar />
-          {children}
+          <main className="px-10 py-8 w-full">
+            {children}
+          </main>
         </SessionProvider>
       </body>
     </html>
