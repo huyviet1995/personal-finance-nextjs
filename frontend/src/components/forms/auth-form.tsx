@@ -31,6 +31,7 @@ export const AuthForm = ({ title, buttonLabel, ...props }: AuthFormProps) => {
     resolver: zodResolver(authFormSchema),
     mode: "onBlur",
   });
+  const isLoggedInPage = title === "Login";
 
   // Handlers
   const onSubmit = (data: {
@@ -77,6 +78,19 @@ export const AuthForm = ({ title, buttonLabel, ...props }: AuthFormProps) => {
           title={buttonLabel}
           className={"rounded-sm bg-gray-900"}
         />
+        {isLoggedInPage ? (
+          <div className="text-center">
+            <a href="/auth/signup" className="text-blue-500 hover:underline">
+              Don't have an account? Sign up
+            </a>
+          </div>
+        ) : (
+          <div className="text-center">
+            <a href="/auth/login" className="text-blue-500 hover:underline">
+              Already have an account? Log in
+            </a>
+          </div>
+        )}
       </form>
     </div>
   );

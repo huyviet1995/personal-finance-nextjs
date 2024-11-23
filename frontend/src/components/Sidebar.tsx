@@ -1,6 +1,5 @@
-'use client'
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import LogoutButton from './LogoutButton';
@@ -10,6 +9,7 @@ export const Sidebar = () => {
   const { data: session, status } = useSession();
   const [user, setUser] = useState({ username: '', email: '' });
   const router = useRouter();
+  const pathName = usePathname();
 
   // Variables
   const avatarInitials = user?.username?.slice(0, 2).toUpperCase();
@@ -18,10 +18,14 @@ export const Sidebar = () => {
   useEffect(() => {
     if (status === 'authenticated' && session?.user) {
       setUser(session.user);
-    } else if (status === 'unauthenticated') {
+    } else if (status === 'unauthenticated' && pathName && !['/auth/signup', '/auth/login'].includes(pathName)) {
       router.push('/auth/login');
     }
-  }, [session?.user, status, router])
+  }, [session?.user, status, router, pathName])
+
+  if (pathName && ['/auth/signup', '/auth/login'].includes(pathName)) {
+    return null;
+  }
 
   const listClassname = 'flex gap-2 flex-row items-center my-4 cursor-pointer';
   return (
