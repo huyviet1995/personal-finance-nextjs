@@ -3,13 +3,14 @@ import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import LogoutButton from './LogoutButton';
+import { sitePaths } from '@/utils/path';
 
 export const Sidebar = () => {
   // hooks
   const { data: session, status } = useSession();
   const [user, setUser] = useState({ username: '', email: '' });
   const router = useRouter();
-  const pathName = usePathname();
+  const pathName: sitePaths = usePathname() as sitePaths;
 
   // Variables
   const avatarInitials = user?.username?.slice(0, 2).toUpperCase();
@@ -18,12 +19,12 @@ export const Sidebar = () => {
   useEffect(() => {
     if (status === 'authenticated' && session?.user) {
       setUser(session.user);
-    } else if (status === 'unauthenticated' && pathName && !['/auth/signup', '/auth/login'].includes(pathName)) {
-      router.push('/auth/login');
+    } else if (status === 'unauthenticated' && pathName && ![sitePaths.SIGN_UP, sitePaths.SIGN_IN].includes(pathName)) {
+      router.push(sitePaths.SIGN_IN);
     }
   }, [session?.user, status, router, pathName])
 
-  if (pathName && ['/auth/signup', '/auth/login'].includes(pathName)) {
+  if (pathName && [sitePaths.SIGN_UP, sitePaths.SIGN_IN].includes(pathName)) {
     return null;
   }
 
