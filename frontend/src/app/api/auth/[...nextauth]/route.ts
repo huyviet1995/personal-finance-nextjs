@@ -21,7 +21,7 @@ export const authOptions = NextAuth({
         });
 
         if (user && await bcrypt.compare(password, user.password)) {
-          return { id: user.id, email: user.email, name: user.username };
+          return { id: user.id, email: user.email, username: user.username };
         } else {
           return null;
         }
@@ -44,7 +44,7 @@ export const authOptions = NextAuth({
       if (session.user) {
         session.user.id = token.id;
         session.user.email = token.email;
-        session.user.name = token.name;
+        session.user.username = token.name;
         return session;
       }
     },

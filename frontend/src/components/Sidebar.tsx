@@ -1,11 +1,25 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 export const Sidebar = () => {
+  const { data: session } = useSession();
+  const [user, setUser] = useState({ username: '', email: '' });
+
+  // Get the user initials
+  const avatarInitials = user?.username?.slice(0, 2).toUpperCase();
+
+  // Effects
+  useEffect(() => {
+    if (session?.user) {
+      setUser(session.user);
+    }
+  }, [session?.user])
+
   const listClassname = 'flex gap-2 flex-row items-center my-4';
   return (
-    <div className="sidebar w-[300px] h-full bg-gray-900 text-gray-300 absolute left-0 top-0">
+    <div className="sidebar w-[300px] h-full bg-gray-900 text-gray-300 absolute left-0 top-0 flex flex-col">
       <div className="logo py-10 px-8">
         <Image width={150} height={50} src={'/images/logo-large.svg'} alt="Logo" />
       </div>
@@ -31,6 +45,17 @@ export const Sidebar = () => {
           <span>Recurring bills</span>
         </li>
       </ul>
+      {user?.email && <div className="user-info px-8 py-4 mt-auto self-end w-full mb-6">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-[0.7rem]">
+            {avatarInitials}
+          </div>
+          <div>
+            <p className="text-sm font-medium">{user?.username}</p>
+            <p className="text-xs text-gray-500">{user?.email}</p>
+          </div>
+        </div>
+      </div>}
     </div>
   );
 };
