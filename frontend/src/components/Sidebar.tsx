@@ -1,24 +1,29 @@
 'use client'
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import LogoutButton from './LogoutButton';
 
 export const Sidebar = () => {
-  const { data: session } = useSession();
+  // hooks
+  const { data: session, status } = useSession();
   const [user, setUser] = useState({ username: '', email: '' });
+  const router = useRouter();
 
-  // Get the user initials
+  // Variables
   const avatarInitials = user?.username?.slice(0, 2).toUpperCase();
 
   // Effects
   useEffect(() => {
-    if (session?.user) {
+    if (status === 'authenticated' && session?.user) {
       setUser(session.user);
+    } else if (status === 'unauthenticated') {
+      router.push('/auth/login');
     }
-  }, [session?.user])
+  }, [session?.user, status, router])
 
-  const listClassname = 'flex gap-2 flex-row items-center my-4';
+  const listClassname = 'flex gap-2 flex-row items-center my-4 cursor-pointer';
   return (
     <div className="sidebar w-[300px] h-full bg-gray-900 text-gray-300 absolute left-0 top-0 flex flex-col">
       <div className="logo py-10 px-8">
