@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import LogoutButton from './LogoutButton';
 
 export const Sidebar = () => {
   const { data: session } = useSession();
@@ -45,7 +46,7 @@ export const Sidebar = () => {
           <span>Recurring bills</span>
         </li>
       </ul>
-      {user?.email && <div className="user-info px-8 py-4 mt-auto self-end w-full mb-6">
+      {user?.email && <div className="user-info px-8 py-4 mt-auto self-end w-full mb-6 flex justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-[0.7rem]">
             {avatarInitials}
@@ -55,6 +56,7 @@ export const Sidebar = () => {
             <p className="text-xs text-gray-500">{user?.email}</p>
           </div>
         </div>
+        <LogoutButton className={'text-sm'} />
       </div>}
     </div>
   );
