@@ -9,7 +9,7 @@ export const Sidebar = () => {
       <div className="logo py-10 px-8">
         <Image width={150} height={50} src={'/images/logo-large.svg'} alt="Logo" />
       </div>
-      <ul className={'flex flex-col h-full px-8 py-4'}>
+      <ul className={'flex flex-col px-8 py-4'}>
         <li className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-overview.svg'} alt="Overview" />
           <span>Overview</span>
