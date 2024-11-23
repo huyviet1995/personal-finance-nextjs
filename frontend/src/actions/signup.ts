@@ -1,4 +1,5 @@
 import { HTTP_METHODS } from "@/utils/constants";
+import { signIn } from "next-auth/react";
 
 export interface SignupResponse {
   jwt?: string;
@@ -17,34 +18,42 @@ export async function signup(formState: any, formData: FormData): Promise<Signup
   const password = formData.get("password") as string;
 
   try {
-    const response = await fetch('/api/signup', {
+    const response = await fetch('/api/auth/signup', {
       method: HTTP_METHODS.POST,
       headers: {
-      "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        username: email,
-        email: email,
-        password: password,
-      }),
-    });
+      body: JSON.stringify({ email, password }),
+    })
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Signup failed");
+    if (!response?.ok) {
+      throw new Error('Signup failed');
     }
 
     const data = await response.json();
-    if (data.jwt) {
-      // Sign in the user after successful registration
-      localStorage.setItem("jwt", data.jwt);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      return { jwt: data.jwt, user: data.user };
-    } else {
-      return { errors: data.errors };
+
+    const { jwt, user } = data;
+    // sign the user in
+    const signInResp = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (signInResp?.error) {
+      throw new Error('Login failed');
     }
+
+    return {
+      jwt,
+      user,
+    };
   } catch (error) {
-    console.error("Error during signup:", error);
-    throw error;
+    return {
+      errors: {
+        email: "Email might already be taken",
+        password: "Password is invalid",
+      },
+    };
   }
 }
