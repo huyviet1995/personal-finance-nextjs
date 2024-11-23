@@ -3,10 +3,13 @@ import React from 'react';
 import Image from 'next/image';
 
 export const Sidebar = () => {
-  const listClassname = 'flex gap-2 flex-row items-center p-4 pl-6';
+  const listClassname = 'flex gap-2 flex-row items-center my-4';
   return (
     <div className="sidebar w-[300px] h-full bg-gray-900 text-gray-300 absolute left-0 top-0">
-      <ul className={'flex flex-col h-full'}>
+      <div className="logo py-10 px-8">
+        <Image width={150} height={50} src={'/images/logo-large.svg'} alt="Logo" />
+      </div>
+      <ul className={'flex flex-col h-full px-8 py-4'}>
         <li className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-overview.svg'} alt="Overview" />
           <span>Overview</span>
