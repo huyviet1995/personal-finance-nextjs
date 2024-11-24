@@ -1,6 +1,9 @@
 import { SpendingCard } from '@/components/SpendingCard';
+import { OverviewCard } from '@/components/OverviewCard';
 import Image from 'next/image';
 import React from 'react';
+import { TransactionItem } from '@/components/TransactionItem';
+import { Divider } from '@nextui-org/react';
 
 // Define the new SavingPotDetail component
 const SavingPotDetail: React.FC<{ title: string; amount: number; borderColor: string }> = ({ title, amount, borderColor = 'blue' }) => (
@@ -11,6 +14,7 @@ const SavingPotDetail: React.FC<{ title: string; amount: number; borderColor: st
   </div>
 );
 
+// Define the new PotCard component
 const OverviewPage: React.FC = () => {
   console.log('OverviewPage');
   return (
@@ -21,14 +25,11 @@ const OverviewPage: React.FC = () => {
         <SpendingCard amount={500} title={'Income'} />
         <SpendingCard amount={300} title={'Saved'} />
       </section>
-      <section>
+      <section className="pot-cards">
         <div className="flex flex-row gap-6">
           <div className="w-7/12 flex flex-col gap-6">
-            <div className="bg-white p-8 shadow rounded">
-              <div className="flex justify-between items-center">
-                <h2 className="font-bold text-xl">Saving Pot</h2>
-                <button className="text-blue-500">See Details</button>
-              </div>
+            {/************** POTS CARD **************/}
+            <OverviewCard title="Saving Pot">
               <div className="flex flex-row items-center gap-5 mt-4">
                 <div className="w-5/12 flex flex-col justify-between bg-gray-100 p-4 rounded">
                   <div className="flex flex-row items-center gap-4 bg-[#F8F4F0] rounded-[12px]">
@@ -50,11 +51,18 @@ const OverviewPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="bg-white p-4 shadow rounded">
-              <h2 className="font-bold text-xl">Transactions</h2>
-              {/* Add Transactions content here */}
-            </div>
+            </OverviewCard>
+            <OverviewCard title="Transactions">
+              <TransactionItem avatar="/images/avatars/serenity-spa-and-wellness.jpg" name="Item 1" amount={25} timestamp="29 Aug 2024, 21:46" />
+              <Divider />
+              <TransactionItem avatar="/images/avatars/elevate-education.jpg" name="Item 2" amount={50} timestamp="28 Aug 2024, 20:30" />
+              <Divider />
+              <TransactionItem avatar="/images/avatars/pixel-playground.jpg" name="Item 3" amount={75} timestamp="27 Aug 2024, 19:15" />
+              <Divider />
+              <TransactionItem avatar="/images/avatars/fork-and-knife.jpg" name="Item 4" amount={100} timestamp="26 Aug 2024, 18:00" />
+              <Divider />
+              <TransactionItem avatar="/images/avatars/swift-ride-share.jpg" name="Item 5" amount={125} timestamp="25 Aug 2024, 16:45" />
+            </OverviewCard>
           </div>
           <div className="w-5/12 flex flex-col gap-6">
             <div className="bg-white p-4 shadow rounded">
@@ -67,6 +75,10 @@ const OverviewPage: React.FC = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/************** TRANSACTIONS CARD **************/}
+      <section className='transaction-cards'>
       </section>
     </div>
   );
