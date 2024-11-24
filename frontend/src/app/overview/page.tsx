@@ -1,11 +1,12 @@
 'use client'
+import { useEffect, useState } from 'react';
 import { SpendingCard } from '@/components/SpendingCard';
 import { OverviewCard } from '@/components/OverviewCard';
 import Image from 'next/image';
 import React from 'react';
 import { TransactionItem } from '@/components/TransactionItem';
 import { Divider } from '@nextui-org/react';
-import { PieChart } from 'react-minimal-pie-chart';
+import { PieChart } from '@/components/PieChart';
 
 // Define the new SavingPotDetail component
 const SavingPotDetail: React.FC<{ title: string; amount: number; borderColor: string }> = ({ title, amount, borderColor = 'blue' }) => (
@@ -25,6 +26,19 @@ const formatAmount = (amount: number | string) => {
 
 // Define the new PotCard component
 const OverviewPage: React.FC = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  const pieChartData = [
+    { title: 'Bill', value: 250, color: '#FF5733' }, // Red-Orange
+    { title: 'Personal Care', value: 30, color: '#33FF57' }, // Green
+    { title: 'Entertainment', value: 25, color: '#3357FF' }, // Blue
+    { title: 'Dining out', value: 67, color: '#FF33A1' }, // Pink
+  ]
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   console.log('OverviewPage');
   return (
     <div className='flex flex-col gap-6'>
@@ -74,40 +88,14 @@ const OverviewPage: React.FC = () => {
             </OverviewCard>
           </div>
           <div className="w-5/12 flex flex-col gap-6">
-            <OverviewCard title="My Budgets">
-              <div className="flex flex-row gap-4">
-                <div className="w-1/2 relative">
-                  <PieChart
-                    data={[
-                      { title: 'One', value: 10, color: '#E38627' },
-                      { title: 'Two', value: 15, color: '#C13C37' },
-                      { title: 'Three', value: 20, color: '#6A2135' },
-                    ]}
-                    lineWidth={20}
-                    radius={50}
-                    label={() => 'My Budgets'}
-                    labelStyle={{
-                      fontSize: '0.5rem',
-                      fontFamily: 'sans-serif',
-                      fill: '#000',
-                    }}
-                    labelPosition={0}
-                  />
-                </div>
-                <div className="w-1/2 flex flex-col gap-2">
-                  {[
-                    { title: 'Budget 1', amount: 20 },
-                    { title: 'Budget 2', amount: 30 },
-                    { title: 'Budget 3', amount: 40 },
-                    { title: 'Budget 4', amount: 50 },
-                  ].map((item, index) => (
-                    <div key={index} className="flex justify-between">
-                      <span>{item.title}</span>
-                      <span>{formatAmount(item.amount)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <OverviewCard title="My Budgets" className={"min-h-[428px]"}>
+              <PieChart
+                data={pieChartData}
+                lineWidth={30}
+                radius={50}
+                amount={200}
+                limit={500}
+              />
             </OverviewCard>
             <OverviewCard title="Recurring bills">
               Recurring bills
