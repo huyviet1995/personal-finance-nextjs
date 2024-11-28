@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <SessionProvider>
           <Sidebar />
-          <main className="px-10 py-8 w-full">
+          <main className="px-10 py-8 w-full overflow-auto h-full main-scrollbar">
             {children}
           </main>
         </SessionProvider>
