@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import LogoutButton from './LogoutButton';
 import { sitePaths } from '@/utils/path';
+import Link from 'next/link';
 
 export const Sidebar = () => {
   // hooks
@@ -35,14 +36,14 @@ export const Sidebar = () => {
         <Image width={150} height={50} src={'/images/logo-large.svg'} alt="Logo" />
       </div>
       <ul className={'flex flex-col px-8 py-4'}>
-        <li className={listClassname} onClick={() => router.push(sitePaths.OVERVIEW)}>
+        <Link href={sitePaths.OVERVIEW} className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-overview.svg'} alt="Overview" />
           <span>Overview</span>
-        </li>
-        <li className={listClassname}>
+        </Link>
+        <Link href={sitePaths.TRANSACTIONS} className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-transactions.svg'} alt="Transactions" />
           <span>Transactions</span>
-        </li>
+        </Link>
         <li className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-budgets.svg'} alt="Budgets" />
           <span>Budgets</span>

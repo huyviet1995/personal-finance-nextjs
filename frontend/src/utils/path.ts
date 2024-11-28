@@ -6,4 +6,5 @@ export enum sitePaths {
   SETTINGS = '/settings',
   OVERVIEW = '/overview',
   LOGOUT = '/auth/logout',
+  TRANSACTIONS = '/transactions',
 }

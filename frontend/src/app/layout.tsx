@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Sidebar } from "@/components/Sidebar";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +29,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const pathName = usePathname();
+
+  const pageTitle = useMemo(() => {
+    switch (pathName) {
+      case "/overview":
+        return "Overview";
+      case "/transactions":
+        return "Transactions";
+      case "/budgets":
+        return "Budgets";
+      case "/pots":
+        return "Pots";
+      case "/recurring-bills":
+        return "Recurring Bills";
+      default:
+        return "Overview";
+    }
+  }, [pathName]);
+
   return (
     <html lang="en">
       <body
@@ -35,6 +56,7 @@ export default function RootLayout({
         <SessionProvider>
           <Sidebar />
           <main className="px-10 py-8 w-full overflow-auto h-full main-scrollbar">
+            <h1 className={'p-2 font-bold text-gray-900 text-[32px] mb-8'}>{pageTitle}</h1>
             {children}
           </main>
         </SessionProvider>

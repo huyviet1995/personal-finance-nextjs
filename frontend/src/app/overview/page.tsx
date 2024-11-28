@@ -43,7 +43,6 @@ const OverviewPage: React.FC = () => {
   console.log('OverviewPage');
   return (
     <div className='flex flex-col gap-6'>
-      <h1 className={'p-2 font-bold text-gray-900 text-[32px]'}>Overview</h1>
       <section className='flex flex-row justify-between gap-6'>
         <SpendingCard amount={200} title={'Spent'} selected />
         <SpendingCard amount={500} title={'Income'} />
