@@ -7,6 +7,7 @@ import React from 'react';
 import { TransactionItem } from '@/components/TransactionItem';
 import { Divider } from '@nextui-org/react';
 import { PieChart } from '@/components/PieChart';
+import { RecurringBillItem } from '@/components/RecurringBillItem';
 
 // Define the new SavingPotDetail component
 const SavingPotDetail: React.FC<{ title: string; amount: number; borderColor: string }> = ({ title, amount, borderColor = 'blue' }) => (
@@ -97,14 +98,16 @@ const OverviewPage: React.FC = () => {
                 limit={500}
               />
             </OverviewCard>
-            <OverviewCard title="Recurring bills">
-              Recurring bills
+            <OverviewCard title="Recurring bills" className='flex flex-col gap-4'>
+              <RecurringBillItem title="Total recurring bills" amount={1550} borderColor="#277C78" />
+              <RecurringBillItem title="Remaining this month" amount={1230} borderColor="#F2CDAC"/>
+              <RecurringBillItem title="Total bill due soon" amount={40} borderColor="#82C9D7" />
             </OverviewCard>
           </div>
         </div>
       </section>
 
-      {/************** TRANSACTIONS CARD **************/}
+      {/************** RECURRING BILLS **************/}
       <section className='transaction-cards'>
       </section>
     </div>
