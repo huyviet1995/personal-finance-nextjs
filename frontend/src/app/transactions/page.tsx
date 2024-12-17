@@ -8,10 +8,16 @@ import {
 import React from "react";
 import Image from "next/image";
 import styles from "./TransactionPage.module.scss";
-import { Input } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 import { Select } from "@/components/ui/select";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa6";
 import clsx from "clsx";
-import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function TransactionsPage() {
   const data = React.useMemo(
@@ -108,19 +114,29 @@ export default function TransactionsPage() {
         header: "Recipient/Sender",
         className: styles.recipientSender,
         cell: (info: any) => (
-          <div className={'flex gap-4 items-center'}>
+          <div className={"flex gap-4 items-center"}>
             {info.row.original.imgSrc ? (
               <Image
                 src={info.row.original.imgSrc}
                 alt={`${info.getValue()} profile`}
-                className={'rounded-full'}
+                className={"rounded-full"}
                 width={40}
                 height={40}
               />
             ) : (
-              <div className={'rounded-full bg-gray-300 flex items-center justify-center'} style={{ width: 40, height: 40 }}>
+              <div
+                className={
+                  "rounded-full bg-gray-300 flex items-center justify-center"
+                }
+                style={{ width: 40, height: 40 }}
+              >
                 <span className={styles.textBold}>
-                  {info.getValue().split(' ').map(word => word[0]).join('').toUpperCase()}
+                  {info
+                    .getValue()
+                    .split(" ")
+                    .map((word) => word[0])
+                    .join("")
+                    .toUpperCase()}
                 </span>
               </div>
             )}
@@ -149,10 +165,10 @@ export default function TransactionsPage() {
         header: "Amount",
         className: styles.amount,
         cell: (info: any) => (
-          <div className={clsx(styles.textBold, 'text-right')}>
-            {info.getValue().toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
+          <div className={clsx(styles.textBold, "text-right")}>
+            {info.getValue().toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
             })}
           </div>
         ),
@@ -167,7 +183,7 @@ export default function TransactionsPage() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageIndex: 0, pageSize: 10 } },
-    globalFilterFn: 'includesString',
+    globalFilterFn: "includesString",
     state: {
       globalFilter,
       sorting: [{ id: sortBy, desc: false }],
@@ -187,70 +203,30 @@ export default function TransactionsPage() {
           className="box-border flex flex-row items-center p-3 gap-4 w-80 h-11 bg-white border rounded-lg border-gray-900"
         />
         <div className="flex items-center gap-2">
-            <span className="text-[14px] text-[#696868]">Sort by</span>
+          <span className="text-[14px] text-[#696868]">Sort by</span>
           <Select>
             <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[114px] h-[45px] border-gray-900 rounded-lg">
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="latest" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="latest">Latest</SelectItem>
+              <SelectItem value="oldest">Oldest</SelectItem>
             </SelectContent>
           </Select>
         </div>
-        <div>
-          <button
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {"<<"}
-          </button>
-          <button
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {"<"}
-          </button>
-          <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {">"}
-          </button>
-          <button
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            {">>"}
-          </button>
-          <span>
-            Page{" "}
-            <strong>
-              {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount()}
-            </strong>{" "}
-          </span>
-          <select
-            value={table.getState().pagination.pageSize}
-            onChange={(e) => {
-              table.setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
-      <table className={'w-full'}>
-        <thead className={'mb-4'}>
+      <table className={"w-full"}>
+        <thead className={"mb-4"}>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className={clsx("w-[428px] h-[18px] font-public-sans font-normal text-[12px] leading-[150%] text-[#696868] flex-none order-0 flex-grow-1 text-start", styles.th)}>
+                <th
+                  key={header.id}
+                  className={clsx(
+                    "w-[428px] h-[18px] font-public-sans font-normal text-[12px] leading-[150%] text-[#696868] flex-none order-0 flex-grow-1 text-start",
+                    styles.th
+                  )}
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -262,9 +238,18 @@ export default function TransactionsPage() {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="border-t border-b border-gray-200">
+            <tr
+              key={row.id}
+              className="border-t border-b border-gray-200"
+            >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className={clsx("py-6", cell.column.columnDef.className)}>
+                <td
+                  key={cell.id}
+                  className={clsx(
+                    "py-6",
+                    cell.column.columnDef.className
+                  )}
+                >
                   {flexRender(
                     cell.column.columnDef.cell,
                     cell.getContext()
@@ -275,50 +260,58 @@ export default function TransactionsPage() {
           ))}
         </tbody>
       </table>
-      <div>
-        <button
-          onClick={() => table.setPageIndex(0)}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<<"}
-        </button>
-        <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<"}
-        </button>
-        <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {">"}
-        </button>
-        <button
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-        >
-          {">>"}
-        </button>
-        <span>
-          Page{" "}
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
-          </strong>{" "}
-        </span>
-        <select
-          value={table.getState().pagination.pageSize}
-          onChange={(e) => {
-            table.setPageSize(Number(e.target.value));
+      <div className="flex justify-between items-center mt-4">
+        <Button
+          variant="outline"
+          className="hover:bg-gray-500 hover:text-white rounded-lg flex justify-center"
+          onClick={() => {
+            const currentPageIndex = table.getState().pagination.pageIndex;
+            if (currentPageIndex > 0) {
+              table.setPageIndex(currentPageIndex - 1);
+            }
           }}
         >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+          <FaCaretLeft className="h-5 w-5 mr-2" />
+          Previous
+        </Button>
+        <div className="flex flex-row gap-2">
+          {Array.from(
+            { length: table.getPageCount() },
+            (_, index) => (
+              <Button
+                key={index}
+                onClick={() => table.setPageIndex(index)}
+                variant="default"
+                disabled={
+                  table.getState().pagination.pageIndex ===
+                  index
+                }
+                className={clsx(
+                  "px-2 py-1 mx-1 border text-color-gray-900 box-border flex flex-row justify-center items-center p-4 gap-4 w-10 h-10 border-gray-900 rounded-lg hover:text-white hover:bg-gray-500",
+                  table.getState().pagination.pageIndex ===
+                    index
+                    ? "bg-gray-900 text-white"
+                    : "bg-white text-color-gray-900"
+                )}
+              >
+                {index + 1}
+              </Button>
+            )
+          )}
+        </div>
+        <Button
+          variant="outline"
+          className="hover:bg-gray-500 hover:text-white rounded-lg flex justify-center"
+          onClick={() => {
+            const currentPageIndex = table.getState().pagination.pageIndex;
+            if (currentPageIndex < table.getPageCount() - 1) {
+              table.setPageIndex(currentPageIndex + 1);
+            }
+          }}
+        >
+          Next
+          <FaCaretRight className="h-5 w-5 ml-2" />
+        </Button>
       </div>
     </div>
   );
