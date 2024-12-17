@@ -1,35 +1,22 @@
-import { Input as NextInput } from "@nextui-org/react";
-import clsx from "clsx";
+import * as React from "react"
 
-type InputProps = {
-  label: string;
-  className?: string;
-  placeholder?: string;
-  type?: string;
-  errorMessage?: string;
-  isInvalid?: boolean;
-};
+import { cn } from "@/lib/utils"
 
-export const Input = ({ label, className, placeholder, type, ...props }: InputProps) => {
-  const labelClassname = clsx('font-bold text-gray-500 text-sm', className);
-  return (
-    <div>
-      <label className={labelClassname}>{label}</label>
-      <NextInput
-        className={`min-h-[45px] ${className}`}
-        labelPlacement="outside"
-        placeholder={placeholder}
-        radius="md"
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
         type={type}
-        required
-        size='lg'
-        classNames={{
-          input: 'w-full min-h-[45px] bg-white border border-gray-300 rounded-md pl-2',
-          errorMessage: 'text-red-500 text-sm',
-        }}
+        className={cn(
+          "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
+        )}
+        ref={ref}
         {...props}
       />
-    </div>
-  );
-};
+    )
+  }
+)
+Input.displayName = "Input"
 
+export { Input }
