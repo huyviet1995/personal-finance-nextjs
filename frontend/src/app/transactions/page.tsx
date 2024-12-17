@@ -6,6 +6,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import React from "react";
+import Image from "next/image";
 import styles from "./TransactionPage.module.scss";
 import clsx from "clsx";
 
@@ -16,29 +17,34 @@ export default function TransactionsPage() {
         recipient_sender: "Bravo Zen Spa",
         category: "Personal Care",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
         amount: -25,
       },
       {
         recipient_sender: "Alpha Analytics",
         category: "General",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/elevate-education.jpg",
         amount: -25,
       },
       {
         recipient_sender: "Delta Consulting",
         category: "Business",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/pixel-playground.jpg",
         amount: -150,
       },
       {
         recipient_sender: "Echo Enterprises",
         category: "Utilities",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/emma-richardson.jpg",
         amount: -75,
       },
       {
         recipient_sender: "Foxtrot Financial",
         category: "Finance",
+        imgSrc: "/images/avatars/swift-ride-share.jpg",
         transaction_date: "29 Aug 2024 21:45",
         amount: 200,
       },
@@ -46,36 +52,42 @@ export default function TransactionsPage() {
         recipient_sender: "Golf Goods",
         category: "Retail",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/sun-park.jpg",
         amount: -50,
       },
       {
         recipient_sender: "Hotel Holdings",
         category: "Real Estate",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
         amount: 300,
       },
       {
         recipient_sender: "India Investments",
         category: "Investments",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/elevate-education.jpg",
         amount: 500,
       },
       {
         recipient_sender: "Juliet Jewelry",
         category: "Luxury",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/pixel-playground.jpg",
         amount: -200,
       },
       {
         recipient_sender: "Kilo Kitchens",
         category: "Home Improvement",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/emma-richardson.jpg",
         amount: -100,
       },
       {
         recipient_sender: "Lima Logistics",
         category: "Transportation",
         transaction_date: "29 Aug 2024 21:45",
+        imgSrc: "/images/avatars/swift-ride-share.jpg",
         amount: -250,
       },
       // ...more mock data...
@@ -89,25 +101,40 @@ export default function TransactionsPage() {
         accessorKey: "recipient_sender",
         header: "Recipient/Sender",
         className: styles.recipientSender,
-        cell: (info) => (
-            <div className={styles.textBold}>{info.getValue()}</div>
+        cell: (info: any) => (
+            <div className={'flex gap-4 items-center'}>
+              {info.row.original.imgSrc ? (
+              <Image
+                src={info.row.original.imgSrc}
+                alt={`${info.getValue()} profile`}
+                className={'rounded-full'}
+                width={40}
+                height={40}
+              />
+              ) : (
+              <div className={'rounded-full bg-gray-300 flex items-center justify-center'} style={{ width: 40, height: 40 }}>
+                <span className={styles.textBold}>
+                {info.getValue().split(' ').map(word => word[0]).join('').toUpperCase()}
+                </span>
+              </div>
+              )}
+              <div className={styles.textBold}>{info.getValue()}</div>
+            </div>
         ),
       },
       {
         accessorKey: "category",
         header: "Category",
         className: styles.category,
-        cell: (info) => (
-            <div className={styles.textSmall}>
-              {info.getValue()}
-            </div>
+        cell: (info: any) => (
+            <div className={styles.textSmall}>{info.getValue()}</div>
         ),
       },
       {
         accessorKey: "transaction_date",
         header: "Transaction Date",
         className: styles.transactionDate,
-        cell: (info) => (
+        cell: (info: any) => (
             <div className={styles.textSmall}>{info.getValue()}</div>
         ),
       },
@@ -115,7 +142,7 @@ export default function TransactionsPage() {
         accessorKey: "amount",
         header: "Amount",
         className: styles.amount,
-        cell: (info) => (
+        cell: (info: any) => (
           <div className={clsx(styles.textBold, 'text-right')}>
             {info.getValue().toLocaleString('en-US', {
               style: 'currency',
