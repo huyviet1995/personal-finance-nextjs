@@ -1,0 +1,37 @@
+.category {
+  width: 40%;
+}
+
+.textSmall {
+  @apply font-normal text-[12px] leading-[150%] text-[#696868] flex-none flex-grow-0 whitespace-nowrap;
+}
+
+.textBold {
+  @apply font-bold text-[14px] leading-[150%] text-[#201F24] whitespace-nowrap;
+}
+
+.transactionDate {
+  width: 20%;
+}
+
+.recipientSender {
+  width: 40%;
+}
+
+.category {
+  width: 20%;
+}
+
+.transactionDate {
+  width: 20%;
+}
+
+.amount {
+  display: flex;
+  justify-content: end;
+  text-align: right;
+}
+
+.th:last-child {
+  text-align: right;
+}
