@@ -19,90 +19,87 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const data = [
+  {
+    recipient_sender: "Bravo Zen Spa",
+    category: "Personal Care",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
+    amount: -25,
+  },
+  {
+    recipient_sender: "Alpha Analytics",
+    category: "General",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/elevate-education.jpg",
+    amount: -25,
+  },
+  {
+    recipient_sender: "Delta Consulting",
+    category: "Business",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/pixel-playground.jpg",
+    amount: -150,
+  },
+  {
+    recipient_sender: "Echo Enterprises",
+    category: "Utilities",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/emma-richardson.jpg",
+    amount: -75,
+  },
+  {
+    recipient_sender: "Foxtrot Financial",
+    category: "Finance",
+    imgSrc: "/images/avatars/swift-ride-share.jpg",
+    transaction_date: "29 Aug 2024 21:45",
+    amount: 200,
+  },
+  {
+    recipient_sender: "Golf Goods",
+    category: "Retail",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/sun-park.jpg",
+    amount: -50,
+  },
+  {
+    recipient_sender: "Hotel Holdings",
+    category: "Real Estate",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
+    amount: 300,
+  },
+  {
+    recipient_sender: "India Investments",
+    category: "Investments",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/elevate-education.jpg",
+    amount: 500,
+  },
+  {
+    recipient_sender: "Juliet Jewelry",
+    category: "Luxury",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/pixel-playground.jpg",
+    amount: -200,
+  },
+  {
+    recipient_sender: "Kilo Kitchens",
+    category: "Home Improvement",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/emma-richardson.jpg",
+    amount: -100,
+  },
+  {
+    recipient_sender: "Lima Logistics",
+    category: "Transportation",
+    transaction_date: "29 Aug 2024 21:45",
+    imgSrc: "/images/avatars/swift-ride-share.jpg",
+    amount: -250,
+  },
+]
+
 export default function TransactionsPage() {
-  const data = React.useMemo(
-    () => [
-      {
-        recipient_sender: "Bravo Zen Spa",
-        category: "Personal Care",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
-        amount: -25,
-      },
-      {
-        recipient_sender: "Alpha Analytics",
-        category: "General",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/elevate-education.jpg",
-        amount: -25,
-      },
-      {
-        recipient_sender: "Delta Consulting",
-        category: "Business",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/pixel-playground.jpg",
-        amount: -150,
-      },
-      {
-        recipient_sender: "Echo Enterprises",
-        category: "Utilities",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/emma-richardson.jpg",
-        amount: -75,
-      },
-      {
-        recipient_sender: "Foxtrot Financial",
-        category: "Finance",
-        imgSrc: "/images/avatars/swift-ride-share.jpg",
-        transaction_date: "29 Aug 2024 21:45",
-        amount: 200,
-      },
-      {
-        recipient_sender: "Golf Goods",
-        category: "Retail",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/sun-park.jpg",
-        amount: -50,
-      },
-      {
-        recipient_sender: "Hotel Holdings",
-        category: "Real Estate",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
-        amount: 300,
-      },
-      {
-        recipient_sender: "India Investments",
-        category: "Investments",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/elevate-education.jpg",
-        amount: 500,
-      },
-      {
-        recipient_sender: "Juliet Jewelry",
-        category: "Luxury",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/pixel-playground.jpg",
-        amount: -200,
-      },
-      {
-        recipient_sender: "Kilo Kitchens",
-        category: "Home Improvement",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/emma-richardson.jpg",
-        amount: -100,
-      },
-      {
-        recipient_sender: "Lima Logistics",
-        category: "Transportation",
-        transaction_date: "29 Aug 2024 21:45",
-        imgSrc: "/images/avatars/swift-ride-share.jpg",
-        amount: -250,
-      },
-      // ...more mock data...
-    ],
-    []
-  );
 
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sortBy, setSortBy] = React.useState("");
@@ -202,17 +199,35 @@ export default function TransactionsPage() {
           onChange={(e) => setGlobalFilter(e.target.value)}
           className="box-border flex flex-row items-center p-3 gap-4 w-80 h-11 bg-white border rounded-lg border-gray-900"
         />
-        <div className="flex items-center gap-2">
-          <span className="text-[14px] text-[#696868]">Sort by</span>
-          <Select>
-            <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[114px] h-[45px] border-gray-900 rounded-lg">
-              <SelectValue placeholder="latest" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="latest">Latest</SelectItem>
-              <SelectItem value="oldest">Oldest</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex gap-4 justify-center">
+          <div className="flex items-center gap-2">
+            <span className="text-[14px] text-[#696868]">Sort by</span>
+            <Select>
+              <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[114px] h-[45px] border-gray-900 rounded-lg">
+                <SelectValue placeholder="latest" />
+              </SelectTrigger>
+              <SelectContent>
+                {data.map((item) => (
+                  <SelectItem key={item.category} value={item.category}>
+                    {item.category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[14px] text-[#696868]">Category</span>
+            <Select>
+              <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[10rem] h-[45px] border-gray-900 rounded-lg">
+                <SelectValue placeholder="All Transactions" />
+              </SelectTrigger>
+              <SelectContent>
+                { }
+                <SelectItem value="latest">Latest</SelectItem>
+                <SelectItem value="oldest">Oldest</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
       <table className={"w-full"}>
