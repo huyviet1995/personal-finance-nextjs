@@ -4,8 +4,9 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   flexRender,
+  getSortedRowModel,
 } from "@tanstack/react-table";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./TransactionPage.module.scss";
 import { Button, Input } from "@/components/ui";
@@ -19,90 +20,104 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const getRandomDate = (start: Date, end: Date) => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+};
+
 const data = [
   {
     recipient_sender: "Bravo Zen Spa",
     category: "Personal Care",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
     amount: -25,
   },
   {
     recipient_sender: "Alpha Analytics",
     category: "General",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/elevate-education.jpg",
     amount: -25,
   },
   {
     recipient_sender: "Delta Consulting",
     category: "Business",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/pixel-playground.jpg",
     amount: -150,
   },
   {
     recipient_sender: "Echo Enterprises",
     category: "Utilities",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/emma-richardson.jpg",
     amount: -75,
   },
   {
     recipient_sender: "Foxtrot Financial",
     category: "Finance",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/swift-ride-share.jpg",
-    transaction_date: "29 Aug 2024 21:45",
     amount: 200,
   },
   {
     recipient_sender: "Golf Goods",
     category: "Retail",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/sun-park.jpg",
     amount: -50,
   },
   {
     recipient_sender: "Hotel Holdings",
     category: "Real Estate",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/serenity-spa-and-wellness.jpg",
     amount: 300,
   },
   {
     recipient_sender: "India Investments",
     category: "Investments",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/elevate-education.jpg",
     amount: 500,
   },
   {
     recipient_sender: "Juliet Jewelry",
     category: "Luxury",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/pixel-playground.jpg",
     amount: -200,
   },
   {
     recipient_sender: "Kilo Kitchens",
     category: "Home Improvement",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/emma-richardson.jpg",
     amount: -100,
   },
   {
     recipient_sender: "Lima Logistics",
     category: "Transportation",
-    transaction_date: "29 Aug 2024 21:45",
+    transaction_date: getRandomDate(new Date(2023, 0, 1), new Date(2024, 11, 31)),
     imgSrc: "/images/avatars/swift-ride-share.jpg",
     amount: -250,
   },
-]
+];
 
 export default function TransactionsPage() {
 
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sortBy, setSortBy] = React.useState("");
+  const [sorting, setSorting] = useState([{ id: 'transaction_date', desc: false }])
+
+  const handleSortBy = (value: string) => {
+    setSortBy(value);
+    if (value === 'oldest') {
+      setSorting([{ id: 'transaction_date', desc: true }])
+    } else if (value === 'latest') {
+      setSorting([{ id: 'transaction_date', desc: false }])
+    }
+  }
 
   const columns = React.useMemo(
     () => [
@@ -154,7 +169,7 @@ export default function TransactionsPage() {
         header: "Transaction Date",
         className: styles.transactionDate,
         cell: (info: any) => (
-          <div className={styles.textSmall}>{info.getValue()}</div>
+          <div className={styles.textSmall}>{info.getValue().toLocaleString()}</div>
         ),
       },
       {
@@ -180,13 +195,14 @@ export default function TransactionsPage() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageIndex: 0, pageSize: 10 } },
+    getSortedRowModel: getSortedRowModel(),
     globalFilterFn: "includesString",
     state: {
       globalFilter,
-      sorting: [{ id: sortBy, desc: false }],
+      sorting,
     },
     onGlobalFilterChange: setGlobalFilter,
-    onSortingChange: setSortBy,
+    onSortingChange: setSorting,
   });
 
   return (
@@ -202,16 +218,13 @@ export default function TransactionsPage() {
         <div className="flex gap-4 justify-center">
           <div className="flex items-center gap-2">
             <span className="text-[14px] text-[#696868]">Sort by</span>
-            <Select>
+            <Select onValueChange={handleSortBy} value={sortBy}>
               <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[114px] h-[45px] border-gray-900 rounded-lg">
                 <SelectValue placeholder="latest" />
               </SelectTrigger>
               <SelectContent>
-                {data.map((item) => (
-                  <SelectItem key={item.category} value={item.category}>
-                    {item.category}
-                  </SelectItem>
-                ))}
+                <SelectItem value="latest">Latest</SelectItem>
+                <SelectItem value="oldest">Oldest</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -221,11 +234,13 @@ export default function TransactionsPage() {
               <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[10rem] h-[45px] border-gray-900 rounded-lg">
                 <SelectValue placeholder="All Transactions" />
               </SelectTrigger>
-              <SelectContent>
-                { }
-                <SelectItem value="latest">Latest</SelectItem>
-                <SelectItem value="oldest">Oldest</SelectItem>
-              </SelectContent>
+                <SelectContent>
+                  {data.map((item) => (
+                    <SelectItem key={item.category} value={item.category}>
+                      {item.category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
             </Select>
           </div>
         </div>
