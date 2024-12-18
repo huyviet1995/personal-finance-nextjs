@@ -231,7 +231,7 @@ export default function TransactionsPage() {
           <div className="flex items-center gap-2">
             <span className="text-[14px] text-[#696868]">Category</span>
             <Select>
-              <SelectTrigger className="flex items-center justify-center p-0 gap-4 w-[10rem] h-[45px] border-gray-900 rounded-lg">
+              <SelectTrigger className="flex justify-center p-0 gap-4 w-[10rem] h-[45px] border-gray-900 rounded-lg">
                 <SelectValue placeholder="All Transactions" />
               </SelectTrigger>
                 <SelectContent>
