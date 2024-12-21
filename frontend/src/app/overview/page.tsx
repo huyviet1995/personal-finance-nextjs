@@ -40,7 +40,6 @@ const OverviewPage: React.FC = () => {
     setIsClient(true);
   }, []);
 
-  console.log('OverviewPage');
   return (
     <div className='flex flex-col gap-6'>
       <section className='flex flex-row justify-between gap-6'>

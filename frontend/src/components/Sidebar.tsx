@@ -44,10 +44,10 @@ export const Sidebar = () => {
           <Image width={20} height={20} src={'images/icon-nav-transactions.svg'} alt="Transactions" />
           <span>Transactions</span>
         </Link>
-        <li className={listClassname}>
+        <Link href={sitePaths.BUDGET} className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-budgets.svg'} alt="Budgets" />
           <span>Budgets</span>
-        </li>
+        </Link>
         <li className={listClassname}>
           <Image width={20} height={20} src={'images/icon-nav-pots.svg'} alt="Pots" />
           <span>Pots</span>
