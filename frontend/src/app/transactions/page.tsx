@@ -1,12 +1,14 @@
 "use client";
+
+import React, { useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   flexRender,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./TransactionPage.module.scss";
 import { Button, Input } from "@/components/ui";
@@ -107,6 +109,8 @@ const data = [
 export default function TransactionsPage() {
 
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [columnFilters, setColumnFilters] = useState([{ id: 'category', value: '' }]);
+  const [category, setCategory] = React.useState("");
   const [sortBy, setSortBy] = React.useState("");
   const [sorting, setSorting] = useState([{ id: 'transaction_date', desc: false }])
 
@@ -117,6 +121,15 @@ export default function TransactionsPage() {
     } else if (value === 'latest') {
       setSorting([{ id: 'transaction_date', desc: false }])
     }
+  }
+
+  const handleFilterCategory = (value: string) => {
+    setCategory(value);
+    if (value === 'All Transactions') {
+      setColumnFilters([{ id: 'category', value: '' }]);
+      return;
+    }
+    setColumnFilters([{ id: 'category', value }]);
   }
 
   const columns = React.useMemo(
@@ -160,6 +173,7 @@ export default function TransactionsPage() {
         accessorKey: "category",
         header: "Category",
         className: styles.category,
+        filterFn: "includesString",
         cell: (info: any) => (
           <div className={styles.textSmall}>{info.getValue()}</div>
         ),
@@ -193,6 +207,7 @@ export default function TransactionsPage() {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageIndex: 0, pageSize: 10 } },
     getSortedRowModel: getSortedRowModel(),
@@ -200,9 +215,11 @@ export default function TransactionsPage() {
     state: {
       globalFilter,
       sorting,
+      columnFilters,
     },
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
   });
 
   return (
@@ -230,11 +247,14 @@ export default function TransactionsPage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[14px] text-[#696868]">Category</span>
-            <Select>
-              <SelectTrigger className="flex justify-center p-0 gap-4 w-[10rem] h-[45px] border-gray-900 rounded-lg">
+            <Select onValueChange={handleFilterCategory} value={category}>
+              <SelectTrigger className="flex justify-center p-2 min-w-[10rem] gap-4 h-[45px] border-gray-900 rounded-lg">
                 <SelectValue placeholder="All Transactions" />
               </SelectTrigger>
                 <SelectContent>
+                  <SelectItem key='All Transactions' value='All Transactions'>
+                    All Transactions
+                  </SelectItem>
                   {data.map((item) => (
                     <SelectItem key={item.category} value={item.category}>
                       {item.category}
