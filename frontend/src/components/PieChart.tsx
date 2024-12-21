@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { PieChart as Chart } from 'react-minimal-pie-chart';
 
