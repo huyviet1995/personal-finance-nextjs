@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import { PieChart as Chart } from 'react-minimal-pie-chart';
+import clsx from 'clsx';
 
 type PieChartProps = {
   data: { title: string; value: number; color: string }[];
@@ -8,11 +9,15 @@ type PieChartProps = {
   radius: number;
   amount: number;
   limit: number;
+  summaryPlacement?: 'right' | 'bottom';
 };
 
-export const PieChart = ({ data, lineWidth, radius, amount, limit }: PieChartProps) => {
+export const PieChart = ({ data, lineWidth, radius, amount, limit, summaryPlacement = 'right' }: PieChartProps) => {
   return (
-    <div className="flex flex-row gap-4 h-full justify-between items-center">
+    <div className={clsx("flex gap-4 h-full justify-between", {
+      "flex-row": summaryPlacement !== "bottom",
+      "flex-col": summaryPlacement === "bottom"
+    })}>
       <div className="w-[60%] relative flex flex-col items-center justify-center">
         <div className="relative">
           <Chart
@@ -31,7 +36,7 @@ export const PieChart = ({ data, lineWidth, radius, amount, limit }: PieChartPro
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 h-full items-center justify-center">
+      <div className="flex flex-col gap-2 h-full justify-center">
         {data.map((item, index) => (
             <div key={index} className="flex justify-between flex-col border-l-4 pl-4" style={{ borderColor: item.color, borderLeftWidth: '5px', borderRadius: '5px' }}>
             <span className="w-[81px] h-[18px] font-public-sans font-normal text-[12px] leading-[150%] text-[#696868] flex-none order-0 flex-grow-0">{item.title}</span>

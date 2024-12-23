@@ -21,17 +21,8 @@ const BudgetsPage: React.FC = () => {
           radius={50} 
           amount={1250} 
           limit={1500} 
+          summaryPlacement='bottom'
         />
-        <div className={styles.spendingSummary}>
-          <h2>Spending Summary</h2>
-          <ul>
-            <li>Rent: $500</li>
-            <li>Groceries: $300</li>
-            <li>Utilities: $200</li>
-            <li>Entertainment: $100</li>
-            <li>Savings: $150</li>
-          </ul>
-        </div>
       </div>
       <div className={styles.column}>
         <SpendingSummary title="Card 1" />
